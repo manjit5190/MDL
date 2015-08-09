@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
+    <!-- Angular Material Dependencies -->
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.min.js"></script>
+
+
+    <!-- Angular Material Javascript now available via Google CDN; version 0.10 used here -->
+    <script src="//ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.js"></script>
+</head>
+<body ng-app="StarterApp" ng-controller="AppCtrl">
+<div md-theme="custom">
+    <div layout="row">
+        <md-content class="md-padding">
+            <md-tabs md-stretch-tabs="always" md-dynamic-height md-border-bottom>
+                <md-tab label="one">
+                    <md-content class="md-padding">
+                        <h1 class="md-display-2">Tab One</h1>
+
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue.
+                            Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales
+                            pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies
+                            mi.</p>
+                    </md-content>
+                </md-tab>
+                <md-tab label="two">
+                    <md-content class="md-padding">
+                        <h1 class="md-display-2">Tab Two</h1>
+
+                        <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere
+                            molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit
+                            erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac
+                            est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
+                    </md-content>
+                </md-tab>
+                <md-tab label="three">
+                    <md-content class="md-padding">
+                        <h1 class="md-display-2">Tab Three</h1>
+
+                        <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere
+                            molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit
+                            erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac
+                            est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
+                    </md-content>
+                </md-tab>
+            </md-tabs>
+        </md-content>
+    </div>
+
+</div>
+<script>
+    var app = angular.module('StarterApp', ['ngMaterial']);
+    app.config(function ($mdThemingProvider) {
+        $mdThemingProvider.theme('custom')
+                .primaryPalette('blue-grey', {'default': '700'})
+                .accentPalette('deep-purple')
+                .warnPalette('red')
+
+    });
+    app.controller('AppCtrl', ['$scope', '$mdSidenav', function ($scope, $mdSidenav) {
+        $scope.toggleSidenav = function (menuId) {
+            $mdSidenav(menuId).toggle();
+        };
+
+    }]);
+</script>
+</body>
+</html>

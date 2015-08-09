@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7" xmlns:ng="http://angularjs.org"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8" xmlns:ng="http://angularjs.org">        <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9" xmlns:ng="http://angularjs.org">               <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" xmlns:ng="http://angularjs.org">                  <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <title>md-data-table demo</title>
+    <meta name="description" content="">
+
+    <!-- mdDataTable css -->
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
+    <link rel="stylesheet" href="bower_components/angular-mdTable/md-data-table-style.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-material/angular-material.js"></script>
+    <script src="bower_components/xlsx-js/xlsx.full.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="bower_components/angular-uuid/angular-uuid4.min.js"></script>
+    <script src="bower_components/angular-uuid/angular-material-icons.min.js"></script>
+    <script src="bower_components/angular-uuid/underscore-min.js"></script>
+
+    <script src="bower_components/angular-mdTable/md-data-table.js"></script>
+    <script src="bower_components/angular-mdTable/md-data-table-templates.js"></script>
+    <style>
+        body {
+            background: #DDDDDD;
+        }
+    </style>
+</head>
+<body ng-app="exampleApp">
+
+<md-toolbar layout="row" layout-align="left center" layout-padding>
+    <h3 class="md-title">Material Design Data Table</h3>
+</md-toolbar>
+
+<div layout="row" ng-controller="ExampleController">
+    <div flex="20">
+        <md-card>
+            <md-subheader>Attributes playground</md-subheader>
+
+            <md-checkbox ng-model="tableCardIsEnabled" aria-label="Enable table card">
+                Enable table card
+            </md-checkbox>
+
+            <md-checkbox ng-model="tableIsSelectable" aria-label="Enable selectable rows" checked>
+                Enable selectable rows
+            </md-checkbox>
+
+            <md-checkbox ng-model="tableIsSortable" aria-label="Enable sortable columns" checked>
+                Enable sortable columns
+            </md-checkbox>
+        </md-card>
+    </div>
+    <div layout-padding flex>
+        <md-data-table
+                table-card="{visible: tableCardIsEnabled, title: 'Nutrition'}"
+                selectable-rows="tableIsSelectable"
+                alternate-headers="'contextual'"
+                sortable-columns="tableIsSortable"
+                delete-row-callback="deleteRowCallback(rows)">
+
+            <md-data-table-header-row>
+                <md-data-table-column align-rule="left">Dessert (100g serving)</md-data-table-column>
+                <md-data-table-column align-rule="right">Calories</md-data-table-column>
+                <md-data-table-column align-rule="right">Fat (g)</md-data-table-column>
+                <md-data-table-column align-rule="right">Carbs (g)</md-data-table-column>
+                <md-data-table-column align-rule="right">Protein (g)</md-data-table-column>
+                <md-data-table-column align-rule="right">Sodium (mg)</md-data-table-column>
+                <md-data-table-column align-rule="right">Calcium (%)</md-data-table-column>
+                <md-data-table-column align-rule="right">Iron (%)</md-data-table-column>
+            </md-data-table-header-row>
+
+            <md-data-table-row
+                    table-row-id="nutrition.id"
+                    ng-repeat="nutrition in nutritionList">
+                <md-data-table-cell>{{nutrition.name}}</md-data-table-cell>
+                <md-data-table-cell>{{nutrition.calories}}</md-data-table-cell>
+                <md-data-table-cell>{{nutrition.fat}}</md-data-table-cell>
+                <md-data-table-cell>{{nutrition.carbs}}</md-data-table-cell>
+                <md-data-table-cell>{{nutrition.protein}}</md-data-table-cell>
+                <md-data-table-cell>{{nutrition.sodium}}</md-data-table-cell>
+                <md-data-table-cell>{{nutrition.calcium}}</md-data-table-cell>
+                <md-data-table-cell>{{nutrition.iron}}</md-data-table-cell>
+            </md-data-table-row>
+        </md-data-table>
+    </div>
+</div>
+
+<!-- example app -->
+<script>
+    (function () {
+        'use strict';
+
+        angular.module('exampleApp', ['ngMaterial', 'mdDataTable']);
+
+        angular.module('exampleApp').controller('ExampleController', function ($scope, $mdToast) {
+            $scope.tableCardIsEnabled = true;
+            $scope.tableIsSelectable = true;
+            $scope.tableIsSortable = true;
+
+            $scope.deleteRowCallback = function (rows) {
+                $mdToast.show(
+                        $mdToast.simple()
+                                .content('Deleted row id(s): ' + rows)
+                                .hideDelay(3000)
+                );
+            };
+
+            $scope.nutritionList = [
+                {
+                    id: '601',
+                    name: 'Frozen joghurt',
+                    calories: 159,
+                    fat: 6.0,
+                    carbs: 24,
+                    protein: 4.0,
+                    sodium: 87,
+                    calcium: '14%',
+                    iron: '1%'
+                },
+                {
+                    id: '602',
+                    name: 'Ice cream sandwitch',
+                    calories: 237,
+                    fat: 9.0,
+                    carbs: 37,
+                    protein: 4.3,
+                    sodium: 129,
+                    calcium: '84%',
+                    iron: '1%'
+                },
+                {
+                    id: '603',
+                    name: 'Eclair',
+                    calories: 262,
+                    fat: 16.0,
+                    carbs: 24,
+                    protein: 6.0,
+                    sodium: 337,
+                    calcium: '6%',
+                    iron: '7%'
+                },
+                {
+                    id: '604',
+                    name: 'Cupkake',
+                    calories: 305,
+                    fat: 3.7,
+                    carbs: 67,
+                    protein: 4.3,
+                    sodium: 413,
+                    calcium: '3%',
+                    iron: '8%'
+                },
+                {
+                    id: '605',
+                    name: 'Gingerbread',
+                    calories: 356,
+                    fat: 16.0,
+                    carbs: 49,
+                    protein: 2.9,
+                    sodium: 327,
+                    calcium: '7%',
+                    iron: '16%'
+                },
+                {
+                    id: '606',
+                    name: 'Jelly bean',
+                    calories: 375,
+                    fat: 0.0,
+                    carbs: 94,
+                    protein: 0.0,
+                    sodium: 50,
+                    calcium: '0%',
+                    iron: '0%'
+                }
+            ];
+        });
+    }());
+</script>
+</body>
+</html>
